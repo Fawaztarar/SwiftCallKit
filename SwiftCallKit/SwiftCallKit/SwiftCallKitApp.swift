@@ -7,11 +7,17 @@
 
 import SwiftUI
 
+
 @main
 struct SwiftCallKitApp: App {
+
+    private let container = AppDependencyContainer.shared
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            container
+                .makeAppCoordinator()
+                .start()
         }
     }
 }
