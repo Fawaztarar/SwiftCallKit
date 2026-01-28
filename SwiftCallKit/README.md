@@ -32,8 +32,8 @@ graph TD
     ViewModels --> Domain
     Domain --> Services
     Services --> System["System (Apple Framework & SDK Wrappers)"]
-    System --> Infrastructure 
-    ```
+    System --> Infrastructure
+```
 
 
 
@@ -53,5 +53,6 @@ This separation ensures that no UI code depends directly on system frameworks
 and that all business logic remains testable and isolated.
 
 ---
+
 
 
