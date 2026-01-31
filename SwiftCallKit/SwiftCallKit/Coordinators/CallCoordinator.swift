@@ -65,10 +65,18 @@ protocol CallCoordinating {
 final class CallCoordinator: CallCoordinating {
     
     private let callKitManager: CallKitManaging
+    
+    private let mediaManager: MediaManaging
+    
+    
 
-      init(callKitManager: CallKitManaging) {
-          self.callKitManager = callKitManager
-      }
+    init(
+        callKitManager: CallKitManaging,
+        mediaManager: MediaManaging
+    ) {
+        self.callKitManager = callKitManager
+        self.mediaManager = mediaManager
+    }
 
 
     func callStateDidChange(to state: CallState) {
@@ -100,17 +108,23 @@ final class CallCoordinator: CallCoordinating {
         case .connecting:
             // Call accepted or initiated
             // Prepare media and signalling
+            mediaManager.prepareMedia()
+            
             break
 
         case .active:
             // Call is fully active
             // Media flowing
+            mediaManager.startMedia()
             break
 
         case .ended:
             // Call finished
             // Tear down media and system resources
             // Use reason for analytics or UI messaging
+            
+            callKitManager.endCall()
+            mediaManager.stopMedia()
             break
         }
     }
