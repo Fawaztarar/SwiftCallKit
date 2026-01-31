@@ -12,4 +12,6 @@ enum CallEvent: Equatable {
     case accept
     case connected
     case end(reason: EndReason)
+    case failed(reason: EndReason)
+
 }

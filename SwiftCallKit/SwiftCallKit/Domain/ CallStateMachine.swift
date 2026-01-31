@@ -19,7 +19,7 @@ struct CallStateMachine {
         case (.idle, .startOutgoing):
             return .calling
 
-        case (.calling, .connected):
+        case (.calling, .connected):  // signalling channel established
             return .connecting
 
         // Incoming call flow

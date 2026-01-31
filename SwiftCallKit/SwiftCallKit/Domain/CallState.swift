@@ -40,38 +40,37 @@ enum EndReason: Equatable {
 // This keeps the Domain layer free from actor annotations
 // while remaining compatible with Swift 6 concurrency rules.
 
-
-extension CallState {
-    nonisolated static func == (lhs: CallState, rhs: CallState) -> Bool {
-        switch (lhs, rhs) {
-
-        case (.idle, .idle),
-             (.calling, .calling),
-             (.ringing, .ringing),
-             (.connecting, .connecting),
-             (.active, .active):
-            return true
-
-        case let (.ended(lReason), .ended(rReason)):
-            return lReason == rReason
-
-        default:
-            return false
-        }
-    }
-}
-
-
-extension EndReason {
-    nonisolated static func == (lhs: EndReason, rhs: EndReason) -> Bool {
-        switch (lhs, rhs) {
-        case (.localHangUp, .localHangUp),
-             (.remoteHangUp, .remoteHangUp),
-             (.failed, .failed),
-             (.declined, .declined):
-            return true
-        default:
-            return false
-        }
-    }
-}
+//
+//extension CallState {
+//    nonisolated static func == (lhs: CallState, rhs: CallState) -> Bool {
+//        switch (lhs, rhs) {
+//
+//        case (.idle, .idle),
+//             (.calling, .calling),
+//             (.ringing, .ringing),
+//             (.connecting, .connecting),
+//             (.active, .active):
+//            return true
+//
+//    
+//
+//        default:
+//            return false
+//        }
+//    }
+//}
+//
+//
+//extension EndReason {
+//    nonisolated static func == (lhs: EndReason, rhs: EndReason) -> Bool {
+//        switch (lhs, rhs) {
+//        case (.localHangUp, .localHangUp),
+//             (.remoteHangUp, .remoteHangUp),
+//             (.failed, .failed),
+//             (.declined, .declined):
+//            return true
+//        default:
+//            return false
+//        }
+//    }
+//}
