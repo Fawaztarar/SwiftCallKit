@@ -68,14 +68,18 @@ final class CallCoordinator: CallCoordinating {
     
     private let mediaManager: MediaManaging
     
+    private let tokenProvider: CallTokenProviding
+    
     
 
     init(
         callKitManager: CallKitManaging,
-        mediaManager: MediaManaging
+        mediaManager: MediaManaging,
+        tokenProvider: CallTokenProviding
     ) {
         self.callKitManager = callKitManager
         self.mediaManager = mediaManager
+        self.tokenProvider = tokenProvider
     }
 
 
@@ -108,13 +112,22 @@ final class CallCoordinator: CallCoordinating {
         case .connecting:
             // Call accepted or initiated
             // Prepare media and signalling
-            mediaManager.prepareMedia()
+
+            Task {
+                let token = try? await tokenProvider.fetchToken()
+                guard let token else { return }
+
+                mediaManager.prepareMedia(with: token)
+            }
+
+
             
             break
 
         case .active:
             // Call is fully active
             // Media flowing
+    
             mediaManager.startMedia()
             break
 

@@ -13,10 +13,12 @@ final class MockMediaManager: MediaManaging {
     private(set) var didPrepareMedia = false
     private(set) var didStartMedia = false
     private(set) var didStopMedia = false
+    private(set) var receivedToken: String?
 
-    func prepareMedia() {
-        didPrepareMedia = true
-    }
+    func prepareMedia(with token: String) {
+           didPrepareMedia = true
+           receivedToken = token
+       }
 
     func startMedia() {
         didStartMedia = true

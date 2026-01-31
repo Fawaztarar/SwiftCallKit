@@ -17,11 +17,14 @@ final class CallCoordinatorTests: XCTestCase {
             // ARRANGE
             let callKitManager = MockCallKitManager()
             let mediaManager = MockMediaManager()
-            
+            let tokenProvider = MockCallTokenProvider()
+
             let coordinator = CallCoordinator(
                 callKitManager: callKitManager,
-                mediaManager: mediaManager
+                mediaManager: mediaManager,
+                tokenProvider: tokenProvider
             )
+
 
             // ACT
             coordinator.callStateDidChange(to: CallState.calling)
@@ -36,10 +39,14 @@ final class CallCoordinatorTests: XCTestCase {
             // ARRANGE
             let callKitManager = MockCallKitManager()
             let mediaManager = MockMediaManager()
+            let tokenProvider = MockCallTokenProvider()
+
             let coordinator = CallCoordinator(
                 callKitManager: callKitManager,
-                mediaManager: mediaManager
+                mediaManager: mediaManager,
+                tokenProvider: tokenProvider
             )
+
             // ACT
             coordinator.callStateDidChange(to: CallState.ringing)
 
@@ -53,10 +60,14 @@ final class CallCoordinatorTests: XCTestCase {
             // ARRANGE
             let callKitManager = MockCallKitManager()
             let mediaManager = MockMediaManager()
+            let tokenProvider = MockCallTokenProvider()
+
             let coordinator = CallCoordinator(
                 callKitManager: callKitManager,
-                mediaManager: mediaManager
+                mediaManager: mediaManager,
+                tokenProvider: tokenProvider
             )
+
 
             // ACT
             coordinator.callStateDidChange(
@@ -73,11 +84,14 @@ final class CallCoordinatorTests: XCTestCase {
             // ARRANGE
             let callKitManager = MockCallKitManager()
             let mediaManager = MockMediaManager()
+            let tokenProvider = MockCallTokenProvider()
 
             let coordinator = CallCoordinator(
                 callKitManager: callKitManager,
-                mediaManager: mediaManager
+                mediaManager: mediaManager,
+                tokenProvider: tokenProvider
             )
+
 
             // ACT
             coordinator.callStateDidChange(to: CallState.connecting)
@@ -93,11 +107,14 @@ final class CallCoordinatorTests: XCTestCase {
             // ARRANGE
             let callKitManager = MockCallKitManager()
             let mediaManager = MockMediaManager()
+            let tokenProvider = MockCallTokenProvider()
 
             let coordinator = CallCoordinator(
                 callKitManager: callKitManager,
-                mediaManager: mediaManager
+                mediaManager: mediaManager,
+                tokenProvider: tokenProvider
             )
+
 
             // ACT
             coordinator.callStateDidChange(to: CallState.active)
@@ -112,10 +129,12 @@ final class CallCoordinatorTests: XCTestCase {
             // ARRANGE
             let callKitManager = MockCallKitManager()
             let mediaManager = MockMediaManager()
+            let tokenProvider = MockCallTokenProvider()
 
             let coordinator = CallCoordinator(
                 callKitManager: callKitManager,
-                mediaManager: mediaManager
+                mediaManager: mediaManager,
+                tokenProvider: tokenProvider
             )
 
             // ACT
@@ -125,6 +144,54 @@ final class CallCoordinatorTests: XCTestCase {
             XCTAssertTrue(mediaManager.didStopMedia)
         }
     }
+    
+    
+    func test_connectingState_fetchesCallToken() async {
+        // ARRANGE (outside so we can assert later)
+        let callKitManager = MockCallKitManager()
+        let mediaManager = MockMediaManager()
+        let tokenProvider = MockCallTokenProvider()
+
+        // ACT (MainActor only)
+        await MainActor.run {
+            let coordinator = CallCoordinator(
+                callKitManager: callKitManager,
+                mediaManager: mediaManager,
+                tokenProvider: tokenProvider
+            )
+
+            coordinator.callStateDidChange(to: CallState.connecting)
+        }
+
+        // ⏳ Allow async Task { } in coordinator to run
+        await Task.yield()
+
+        // ASSERT
+        XCTAssertTrue(tokenProvider.didFetchToken)
+    }
+
+
+    func test_connectingState_fetchesToken_andPreparesMediaWithToken() async {
+        let callKitManager = MockCallKitManager()
+        let mediaManager = MockMediaManager()
+        let tokenProvider = MockCallTokenProvider()
+        tokenProvider.tokenToReturn = "mock-token"
+
+        await MainActor.run {
+            let coordinator = CallCoordinator(
+                callKitManager: callKitManager,
+                mediaManager: mediaManager,
+                tokenProvider: tokenProvider
+            )
+
+            coordinator.callStateDidChange(to: .connecting)
+        }
+
+        await Task.yield()
+
+        XCTAssertEqual(mediaManager.receivedToken, "mock-token")
+    }
+
 
 
 }
