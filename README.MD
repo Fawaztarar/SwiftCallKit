@@ -97,13 +97,6 @@ This project is developed using TDD.
 
 No Apple system APIs are exercised in tests.
 
-## Reactive & Async Strategy
-
-- **Combine** is used for state observation and UI binding
-- **async/await** is used for one-shot side effects (token fetch, media setup)
-- The two models are intentionally kept separate to avoid complexity
-
-This mirrors real-world iOS platform practices.
 
 
 
