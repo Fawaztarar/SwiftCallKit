@@ -43,33 +43,48 @@ final class CallViewModel: ObservableObject {
     
     private let coordinator: CallCoordinating?
     
+
+
+    
+    
+    var stateLabel: String {
+        switch state {
+        case .idle:
+            return "Idle"
+        case .calling:
+            return "Calling…"
+        case .ringing:
+            return "Ringing"
+        case .connecting:
+            return "Connecting"
+        case .active:
+            return "Active"
+        case .ended:
+            return "Ended"
+        }
+    }
+
+    
     // MARK: - Initialisation
     
     init(
         initialState: CallState = .idle,
         stateMachine: CallStateMachine? = nil,
-        coordinator: CallCoordinating? = nil
+        coordinator: CallCoordinating? = nil,
+
     ) {
         self.state = initialState
         self.stateMachine = stateMachine ?? CallStateMachine()
         self.coordinator = coordinator
+
     }
-    
-    convenience init(
-        initialState: CallState = .idle,
-        coordinator: CallCoordinating? = nil
-    ) {
-        self.init(
-            initialState: initialState,
-            stateMachine: nil,
-            coordinator: coordinator
-        )
-    }
+
 
     
     // MARK: - Event Handling
     
     func send(event: CallEvent) {
+        
         let newState = stateMachine.transition(
             from: state,
             event: event
@@ -82,6 +97,7 @@ final class CallViewModel: ObservableObject {
     }
 
     
+  
     
     
 }

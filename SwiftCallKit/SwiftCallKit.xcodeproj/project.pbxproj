@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		40ECF2152F2ECD4C000FA535 /* LiveKit in Frameworks */ = {isa = PBXBuildFile; productRef = 40ECF2142F2ECD4C000FA535 /* LiveKit */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		4054BCC32F298FE400AD8947 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -29,9 +33,22 @@
 		4054BCCC2F298FE400AD8947 /* SwiftCallKitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftCallKitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		40C7DA502F319E25000E5FCA /* Exceptions for "SwiftCallKit" folder in "SwiftCallKit" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 4054BCB42F298FE100AD8947 /* SwiftCallKit */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		4054BCB72F298FE100AD8947 /* SwiftCallKit */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				40C7DA502F319E25000E5FCA /* Exceptions for "SwiftCallKit" folder in "SwiftCallKit" target */,
+			);
 			path = SwiftCallKit;
 			sourceTree = "<group>";
 		};
@@ -52,6 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				40ECF2152F2ECD4C000FA535 /* LiveKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +130,7 @@
 			);
 			name = SwiftCallKit;
 			packageProductDependencies = (
+				40ECF2142F2ECD4C000FA535 /* LiveKit */,
 			);
 			productName = SwiftCallKit;
 			productReference = 4054BCB52F298FE100AD8947 /* SwiftCallKit.app */;
@@ -195,6 +214,9 @@
 			);
 			mainGroup = 4054BCAC2F298FE100AD8947;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				40ECF2132F2ECD4C000FA535 /* XCRemoteSwiftPackageReference "client-sdk-swift" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 4054BCB62F298FE100AD8947 /* Products */;
 			projectDirPath = "";
@@ -400,6 +422,9 @@
 				DEVELOPMENT_TEAM = XRBX6Z7278;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SwiftCallKit/Info.plist;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "We need microphone access for calls";
+				INFOPLIST_KEY_NSVoIPUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -432,6 +457,9 @@
 				DEVELOPMENT_TEAM = XRBX6Z7278;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SwiftCallKit/Info.plist;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "We need microphone access for calls";
+				INFOPLIST_KEY_NSVoIPUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -578,6 +606,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		40ECF2132F2ECD4C000FA535 /* XCRemoteSwiftPackageReference "client-sdk-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/livekit/client-sdk-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.11.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		40ECF2142F2ECD4C000FA535 /* LiveKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 40ECF2132F2ECD4C000FA535 /* XCRemoteSwiftPackageReference "client-sdk-swift" */;
+			productName = LiveKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4054BCAD2F298FE100AD8947 /* Project object */;
 }

@@ -6,3 +6,13 @@
 //
 
 import Foundation
+import Foundation
+
+final class CallTokenService: CallTokenProviding {
+
+    func fetchToken() async throws -> String {
+        // Stub implementation for learning & local runs
+        // Replace with real backend call later
+        return "mock-call-token"
+    }
+}

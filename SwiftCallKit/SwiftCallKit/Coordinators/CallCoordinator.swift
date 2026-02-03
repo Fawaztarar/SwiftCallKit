@@ -84,6 +84,8 @@ final class CallCoordinator: CallCoordinating {
 
 
     func callStateDidChange(to state: CallState) {
+        
+        Log.info("State changed → \(state)")
 
         switch state {
 
@@ -96,6 +98,7 @@ final class CallCoordinator: CallCoordinating {
             // Outgoing call initiated
             // Show outgoing call UI
             // Inform system of outgoing call
+            Log.info("Starting outgoing CallKit call")
             
             callKitManager.startOutgoingCall()
             
@@ -112,12 +115,14 @@ final class CallCoordinator: CallCoordinating {
         case .connecting:
             // Call accepted or initiated
             // Prepare media and signalling
+            Log.info("Fetching token & preparing media")
 
             Task {
                 let token = try? await tokenProvider.fetchToken()
                 guard let token else { return }
 
-                mediaManager.prepareMedia(with: token)
+                try? await mediaManager.prepareMedia(with: token)
+
             }
 
 
@@ -127,6 +132,7 @@ final class CallCoordinator: CallCoordinating {
         case .active:
             // Call is fully active
             // Media flowing
+            Log.info("Starting media (mic/camera)")
     
             mediaManager.startMedia()
             break
@@ -135,6 +141,7 @@ final class CallCoordinator: CallCoordinating {
             // Call finished
             // Tear down media and system resources
             // Use reason for analytics or UI messaging
+            Log.info("Stopping media & ending CallKit call")
             
             callKitManager.endCall()
             mediaManager.stopMedia()

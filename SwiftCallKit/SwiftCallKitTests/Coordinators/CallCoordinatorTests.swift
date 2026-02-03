@@ -79,28 +79,35 @@ final class CallCoordinatorTests: XCTestCase {
         }
     }
     
-    func test_connectingState_preparesMedia() async {
-        await MainActor.run {
-            // ARRANGE
-            let callKitManager = MockCallKitManager()
-            let mediaManager = MockMediaManager()
-            let tokenProvider = MockCallTokenProvider()
 
-            let coordinator = CallCoordinator(
+    func test_connectingState_preparesMedia() async {
+        // ARRANGE
+        let callKitManager = MockCallKitManager()
+        let mediaManager = MockMediaManager()
+        let tokenProvider = MockCallTokenProvider()
+
+        let coordinator = await MainActor.run {
+            CallCoordinator(
                 callKitManager: callKitManager,
                 mediaManager: mediaManager,
                 tokenProvider: tokenProvider
             )
-
-
-            // ACT
-            coordinator.callStateDidChange(to: CallState.connecting)
-
-            // ASSERT
-            XCTAssertTrue(mediaManager.didPrepareMedia)
         }
-    }
+
+        // ACT
+        await MainActor.run {
+            coordinator.callStateDidChange(to: .connecting)
+        }
+
+        // Allow async Task { } to execute
+        await Task.yield()
+        await Task.yield()
     
+
+        // ASSERT
+        XCTAssertTrue(mediaManager.didPrepareMedia)
+    }
+
 
     func test_activeState_startMedia() async {
         await MainActor.run {
@@ -124,7 +131,7 @@ final class CallCoordinatorTests: XCTestCase {
         }
     }
     
-    func test_endedState_sopMedia() async {
+    func test_endedState_stopMedia() async {
         await MainActor.run {
             // ARRANGE
             let callKitManager = MockCallKitManager()
@@ -164,6 +171,7 @@ final class CallCoordinatorTests: XCTestCase {
         }
 
         // ⏳ Allow async Task { } in coordinator to run
+        await Task.yield()
         await Task.yield()
 
         // ASSERT

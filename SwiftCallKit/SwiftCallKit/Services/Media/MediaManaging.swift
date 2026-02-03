@@ -10,7 +10,8 @@ protocol MediaManaging {
 
     // Prepare media resources (audio/video, permissions, engine setup)
     // Called when a call is transitioning into a connecting state
-    func prepareMedia(with token: String)
+//    func prepareMedia(with token: String)
+    func prepareMedia(with token: String) async throws
 
     // Start media streaming once the call is fully active
     func startMedia()
