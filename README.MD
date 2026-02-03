@@ -1,12 +1,11 @@
 # SwiftCallKit
 
-SwiftCallKit is a production-grade reference iOS application demonstrating how to build
+SwiftCallKit is a production-grade iOS reference project showcasing a **state-driven CallKit architecture**
+built with **SwiftUI**, **Combine**, and **Coordinator-based MVVM**, and developed using **Test-Driven Development**.
 
-audio and video calling infrastructure using **CallKit**, **SwiftUI**, and a **Coordinator-driven MVVM architecture**.
+The project focuses on explicit state management, side-effect isolation, and testability, reflecting
+real-world iOS platform engineering practices rather than feature-driven implementation.
 
-
-This project is intentionally designed as an **architecture-first system**, focusing on
-scalability, testability, and clean separation of concerns rather than feature quantity.
 
 ---
 
